@@ -90,7 +90,7 @@ class NewCommand extends \Symfony\Component\Console\Command\Command {
 	{
 		switch ($type) {
 		    case "laravel":
-		    	return 'http://cabinet.laravel.com/latest.zip';
+		    	return 'http://acacha.org/boostrap-app-downloads/bootstrap-app-laravel.zip';
 		        break;
 		    case "codeigniter":
 		    	return '';
