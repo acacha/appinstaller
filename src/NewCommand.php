@@ -37,21 +37,9 @@ class NewCommand extends \Symfony\Component\Console\Command\Command {
 			$output
 		);
 
-		switch ($type) {
-		    case "laravel":
-		        $output->writeln('<info>Type: laravel</info>');
-		        break;
-		    case "codeigniter":
-		        $output->writeln('<info>Type: codeigniter</info>');
-		        break;
-		    default:
-		    	$output->writeln('<error>Unknown type!</error>');
-		        die(-1);
-		}     
-
 		$output->writeln('<info>Crafting application...</info>');
 
-		$this->download($zipFile = $this->makeFilename(),$type)
+		$this->download($this->getURLByType($type),$zipFile = $this->makeFilename())
              ->extract($zipFile, $directory)
              ->cleanUp($zipFile);
 
@@ -91,27 +79,36 @@ class NewCommand extends \Symfony\Component\Console\Command\Command {
 		return getcwd().'/bootstrap-app_'.md5(time().uniqid()).'.zip';
 	}
 
+
+	/**
+	 * base URL by Type
+	 *
+	 * @param  string  $zipFile
+	 * @return $this
+	 */
+	protected function getURLByType($type)
+	{
+		switch ($type) {
+		    case "laravel":
+		    	return 'http://cabinet.laravel.com/latest.zip';
+		        break;
+		    case "codeigniter":
+		    	return '';
+		        break;
+		    default:
+		    	$output->writeln('<error>Unknown type!</error>');
+		        die(-1);    
+		} 
+	}
+
 	/**
 	 * Download the temporary Zip to the given file.
 	 *
 	 * @param  string  $zipFile
 	 * @return $this
 	 */
-	protected function download($zipFile, $type)
+	protected function download($url,$zipFile)
 	{
-		$laravel_url = 'http://acacha.org/boostrap-app/laravel/latest.zip';
-		$codeigniter_url = 'http://acacha.org/boostrap-app/codeigniter/latest.zip';
-
-		$url = "";
-		switch ($type) {
-		    case "laravel":
-		        $url = $laravel_url;
-		        break;
-		    case "codeigniter":
-		        $url = $codeigniter_url;
-		        break;
-		}   
-		
 		$response = \GuzzleHttp\get($url)->getBody();
 
 		file_put_contents($zipFile, $response);
