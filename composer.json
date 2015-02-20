@@ -1,0 +1,23 @@
+{
+    "name": "bootstrap-app/installer",
+    "description": "Bootstrap-app installer.",
+    "keywords": ["bootstrap"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergi Tur Badenas",
+            "email": "sergiturbadenas@gmail.com"
+        }
+    ],
+	"autoload": {
+		"classmap": ["src"]
+	},
+	"require": {
+		"guzzlehttp/guzzle": "~4.0",
+		"symfony/console": "~2.3"
+	},
+	"bin": [
+		"bootstrap-app"
+	],
+	"minimum-stability": "stable"
+}
